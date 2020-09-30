@@ -8,13 +8,16 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    //0=yellow,1=red
+    //0=yellow,1=red,2=empty
 
     int activePlayer=0;
+    int[] gameState={2,2,2,2,2,2,2,2,2};
 
     public void dropIn(View view){
 
         ImageView counter=(ImageView)view;
+        int tappedCounter=Integer.parseInt(counter.getTag().toString());
+        gameState[tappedCounter]=activePlayer;
         counter.setTranslationY(-1500);
         if(activePlayer==0){
         counter.setImageResource(R.drawable.yellow);
