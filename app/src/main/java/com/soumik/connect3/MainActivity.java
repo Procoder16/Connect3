@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     int activePlayer=0;
     int[] gameState={2,2,2,2,2,2,2,2,2};
+    int[][] winningPositions={{1,2,3},{4,5,6},{7,8,9},{1,4,7},{2,5,8},{3,6,9},{1,5,9},{3,5,7}};
 
     public void dropIn(View view){
 
