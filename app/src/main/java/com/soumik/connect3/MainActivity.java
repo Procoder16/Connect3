@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView counter=(ImageView)view;
         int tappedCounter=Integer.parseInt(counter.getTag().toString());
+        boolean gameActive=true;
+        if(gameState[tappedCounter]==2 && gameActive){
         gameState[tappedCounter]=activePlayer;
         counter.setTranslationY(-1500);
         if(activePlayer==0){
@@ -31,18 +33,19 @@ public class MainActivity extends AppCompatActivity {
         }
         counter.animate().translationYBy(1500).rotation(1800).setDuration(600);
 
-        for(int winningPosition[]:winningPositions){
-            if(gameState[winningPosition[0]]==gameState[winningPosition[1]]&&gameState[winningPosition[1]]==gameState[winningPosition[2]]&&gameState[winningPosition[0]]!=2){
+        for(int winningPosition[]:winningPositions) {
+            if (gameState[winningPosition[0]] == gameState[winningPosition[1]] && gameState[winningPosition[1]] == gameState[winningPosition[2]] && gameState[winningPosition[0]] != 2) {
                 //Someone has won!!!!
+                gameActive=false;
                 String winner;
-                if(activePlayer==1){
-                    winner="Yellow";
-                }
-                else{
-                    winner="Red";
+                if (activePlayer == 1) {
+                    winner = "Yellow";
+                } else {
+                    winner = "Red";
                 }
                 Toast.makeText(this, winner + " has won!!", Toast.LENGTH_SHORT).show();
             }
+        }
         }
     }
 
