@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridLayout;
+import androidx.gridlayout.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,12 +23,14 @@ public class MainActivity extends AppCompatActivity {
     public void dropIn(View view){
 
         ImageView counter=(ImageView)view;
+
         int tappedCounter=Integer.parseInt(counter.getTag().toString());
 
-
         if(gameState[tappedCounter]==2 && gameActive){
+
         gameState[tappedCounter]=activePlayer;
         counter.setTranslationY(-1500);
+
         if(activePlayer==0){
         counter.setImageResource(R.drawable.yellow);
         activePlayer=1;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
             counter.setImageResource(R.drawable.red);
             activePlayer=0;
         }
+
         counter.animate().translationYBy(1500).rotation(1800).setDuration(600);
 
         for(int winningPosition[]:winningPositions) {
@@ -60,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void playAgain(View view){
+        public void playAgain(View view){
 
         Button playAgainButton=(Button)findViewById(R.id.playAgainButton);
         TextView winnerText=(TextView) findViewById(R.id.winnerTextView);
