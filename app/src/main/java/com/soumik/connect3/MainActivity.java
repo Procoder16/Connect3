@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             gameActive = false;
 
             Button playAgainButton=findViewById(R.id.playAgainButton);
-            TextView drawText =findViewById(R.id.gameResultTextView);
+            TextView drawText=findViewById(R.id.gameResultTextView);
             drawText.setText("It's a draw!!");
             drawText.setVisibility(View.VISIBLE);
             playAgainButton.setVisibility(View.VISIBLE);
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         GridLayout gridLayout=findViewById(R.id.gridLayout);
         for(int i=0;i<gridLayout.getChildCount();i++){
-            ImageView counter = (ImageView)gridLayout.getChildAt(i);
+            ImageView counter=(ImageView)gridLayout.getChildAt(i);
             counter.setImageDrawable(null);
         }
         for (int i=0;i<gameState.length;i++){
