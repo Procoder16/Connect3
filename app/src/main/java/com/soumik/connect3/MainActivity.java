@@ -28,53 +28,53 @@ public class MainActivity extends AppCompatActivity {
 
         if(gameState[tappedCounter]==2 && gameActive){
 
-        gameState[tappedCounter]=activePlayer;
-        counter.setTranslationY(-1500);
+            gameState[tappedCounter]=activePlayer;
+            counter.setTranslationY(-1500);
 
-        if(activePlayer==0){
-        counter.setImageResource(R.drawable.yellow);
-        activePlayer=1;
-        }
-        else{
-            counter.setImageResource(R.drawable.red);
-            activePlayer=0;
-        }
+            if(activePlayer==0){
+                counter.setImageResource(R.drawable.yellow);
+                activePlayer=1;
+            }
+            else{
+                counter.setImageResource(R.drawable.red);
+                activePlayer=0;
+            }
 
-        counter.animate().translationYBy(1500).rotation(1800).setDuration(600);
+            counter.animate().translationYBy(1500).rotation(1800).setDuration(600);
 
-        for(int winningPosition[]:winningPositions) {
-            if (gameState[winningPosition[0]] == gameState[winningPosition[1]] && gameState[winningPosition[1]] == gameState[winningPosition[2]] && gameState[winningPosition[0]] != 2) {
-                //Someone has won!!!!
-                gameActive=false;
-                String winner;
-                if (activePlayer == 1) {
-                    winner = "Yellow";
-                } else {
-                    winner = "Red";
+            for(int winningPosition[]:winningPositions) {
+                if (gameState[winningPosition[0]] == gameState[winningPosition[1]] && gameState[winningPosition[1]] == gameState[winningPosition[2]] && gameState[winningPosition[0]] != 2) {
+                    //Someone has won!!!!
+                    gameActive=false;
+                    String winner;
+                    if (activePlayer == 1) {
+                        winner = "Yellow";
+                    } else {
+                        winner = "Red";
+                    }
+
+                    Button playAgainButton=findViewById(R.id.playAgainButton);
+                    TextView winnerText=findViewById(R.id.gameResultTextView);
+                    winnerText.setText(winner + " has won!!");
+                    winnerText.setVisibility(View.VISIBLE);
+                    playAgainButton.setVisibility(View.VISIBLE);
                 }
+            }
+
+            if(! Arrays.toString(gameState).contains("2")) {
+                //Game is a draw!!!!
+                gameActive = false;
 
                 Button playAgainButton=findViewById(R.id.playAgainButton);
-                TextView winnerText=findViewById(R.id.gameResultTextView);
-                winnerText.setText(winner + " has won!!");
-                winnerText.setVisibility(View.VISIBLE);
+                TextView drawText=findViewById(R.id.gameResultTextView);
+                drawText.setText("It's a draw!!");
+                drawText.setVisibility(View.VISIBLE);
                 playAgainButton.setVisibility(View.VISIBLE);
             }
         }
-
-        if(! Arrays.toString(gameState).contains("2")) {
-            //Game is a draw!!!!
-            gameActive = false;
-
-            Button playAgainButton=findViewById(R.id.playAgainButton);
-            TextView drawText=findViewById(R.id.gameResultTextView);
-            drawText.setText("It's a draw!!");
-            drawText.setVisibility(View.VISIBLE);
-            playAgainButton.setVisibility(View.VISIBLE);
-        }
-        }
     }
 
-        public void playAgain(View view){
+    public void playAgain(View view){
 
         Button playAgainButton=findViewById(R.id.playAgainButton);
         TextView winnerText=findViewById(R.id.gameResultTextView);
