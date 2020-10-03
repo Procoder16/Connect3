@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
                     winner = "Red";
                 }
 
-                Button playAgainButton=(Button)findViewById(R.id.playAgainButton);
-                TextView winnerText=(TextView) findViewById(R.id.gameResultTextView);
+                Button playAgainButton=findViewById(R.id.playAgainButton);
+                TextView winnerText=findViewById(R.id.gameResultTextView);
                 winnerText.setText(winner + " has won!!");
                 winnerText.setVisibility(View.VISIBLE);
                 playAgainButton.setVisibility(View.VISIBLE);
@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
             //Game is a draw!!!!
             gameActive = false;
 
-            Button playAgainButton=(Button)findViewById(R.id.playAgainButton);
-            TextView drawText =(TextView)findViewById(R.id.gameResultTextView);
+            Button playAgainButton=findViewById(R.id.playAgainButton);
+            TextView drawText =findViewById(R.id.gameResultTextView);
             drawText.setText("It's a draw!!");
             drawText.setVisibility(View.VISIBLE);
             playAgainButton.setVisibility(View.VISIBLE);
@@ -76,12 +76,12 @@ public class MainActivity extends AppCompatActivity {
 
         public void playAgain(View view){
 
-        Button playAgainButton=(Button)findViewById(R.id.playAgainButton);
-        TextView winnerText=(TextView) findViewById(R.id.gameResultTextView);
+        Button playAgainButton=findViewById(R.id.playAgainButton);
+        TextView winnerText=findViewById(R.id.gameResultTextView);
         winnerText.setVisibility(View.INVISIBLE);
         playAgainButton.setVisibility(View.INVISIBLE);
 
-        GridLayout gridLayout=(GridLayout)findViewById(R.id.gridLayout);
+        GridLayout gridLayout=findViewById(R.id.gridLayout);
         for(int i=0;i<gridLayout.getChildCount();i++){
             ImageView counter = (ImageView)gridLayout.getChildAt(i);
             counter.setImageDrawable(null);
