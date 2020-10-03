@@ -20,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
     int[][] winningPositions={{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{2,4,6},{0,4,8}};
     boolean gameActive=true;
 
+    private TextView gameResultText;
+    private Button playAgainButton;
+
     public void dropIn(View view){
 
         ImageView counter=(ImageView)view;
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
             counter.animate().translationYBy(1500).rotation(1800).setDuration(600);
 
-            for(int winningPosition[]:winningPositions) {
+            for(int[] winningPosition : winningPositions) {
                 if (gameState[winningPosition[0]] == gameState[winningPosition[1]] && gameState[winningPosition[1]] == gameState[winningPosition[2]] && gameState[winningPosition[0]] != 2) {
                     //Someone has won!!!!
                     gameActive=false;
@@ -53,10 +56,8 @@ public class MainActivity extends AppCompatActivity {
                         winner = "Red";
                     }
 
-                    Button playAgainButton=findViewById(R.id.playAgainButton);
-                    TextView winnerText=findViewById(R.id.gameResultTextView);
-                    winnerText.setText(winner + " has won!!");
-                    winnerText.setVisibility(View.VISIBLE);
+                    gameResultText.setText(winner + " has won!!");
+                    gameResultText.setVisibility(View.VISIBLE);
                     playAgainButton.setVisibility(View.VISIBLE);
                 }
             }
@@ -65,10 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 //Game is a draw!!!!
                 gameActive = false;
 
-                Button playAgainButton=findViewById(R.id.playAgainButton);
-                TextView drawText=findViewById(R.id.gameResultTextView);
-                drawText.setText("It's a draw!!");
-                drawText.setVisibility(View.VISIBLE);
+                gameResultText.setText("It's a draw!!");
+                gameResultText.setVisibility(View.VISIBLE);
                 playAgainButton.setVisibility(View.VISIBLE);
             }
         }
@@ -76,9 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void playAgain(View view){
 
-        Button playAgainButton=findViewById(R.id.playAgainButton);
-        TextView winnerText=findViewById(R.id.gameResultTextView);
-        winnerText.setVisibility(View.INVISIBLE);
+        gameResultText.setVisibility(View.INVISIBLE);
         playAgainButton.setVisibility(View.INVISIBLE);
 
         GridLayout gridLayout=findViewById(R.id.gridLayout);
@@ -86,9 +83,7 @@ public class MainActivity extends AppCompatActivity {
             ImageView counter=(ImageView)gridLayout.getChildAt(i);
             counter.setImageDrawable(null);
         }
-        for (int i=0;i<gameState.length;i++){
-            gameState[i]=2;
-        }
+        Arrays.fill(gameState, 2);
         gameActive=true;
         activePlayer=0;
     }
@@ -97,5 +92,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        gameResultText=findViewById(R.id.gameResultTextView);
+        playAgainButton=findViewById(R.id.playAgainButton);
     }
 }
