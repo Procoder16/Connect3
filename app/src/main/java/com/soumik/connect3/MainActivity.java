@@ -5,11 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import androidx.gridlayout.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,11 +54,22 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 Button playAgainButton=(Button)findViewById(R.id.playAgainButton);
-                TextView winnerText=(TextView) findViewById(R.id.winnerTextView);
+                TextView winnerText=(TextView) findViewById(R.id.gameResultTextView);
                 winnerText.setText(winner + " has won!!");
                 winnerText.setVisibility(View.VISIBLE);
                 playAgainButton.setVisibility(View.VISIBLE);
             }
+        }
+
+        if(! Arrays.toString(gameState).contains("2")) {
+            //Game is a draw!!!!
+            gameActive = false;
+
+            Button playAgainButton=(Button)findViewById(R.id.playAgainButton);
+            TextView drawText =(TextView)findViewById(R.id.gameResultTextView);
+            drawText.setText("It's a draw!!");
+            drawText.setVisibility(View.VISIBLE);
+            playAgainButton.setVisibility(View.VISIBLE);
         }
         }
     }
@@ -66,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         public void playAgain(View view){
 
         Button playAgainButton=(Button)findViewById(R.id.playAgainButton);
-        TextView winnerText=(TextView) findViewById(R.id.winnerTextView);
+        TextView winnerText=(TextView) findViewById(R.id.gameResultTextView);
         winnerText.setVisibility(View.INVISIBLE);
         playAgainButton.setVisibility(View.INVISIBLE);
 
