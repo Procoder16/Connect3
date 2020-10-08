@@ -8,7 +8,6 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.Button;
 
@@ -31,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView gameResultText;
     private Button playAgainButton;
+    private GridLayout gridLayout;
     /** Animation, that's runs after someone has won */
     private @Nullable AnimatorSet currentWinnerAnim;
 
@@ -86,11 +86,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startHighlightingWinner(int[] winPos) {
-        ViewGroup gridLayout = findViewById(R.id.gridLayout);
-
         List<Animator> anims = new ArrayList<>(winPos.length);
         for(int pos : winPos) {
-            ImageView coin = findCoinByPos(gridLayout, pos);
+            ImageView coin = findCoinByPos(pos);
             Animator coinAnim = createWinAnim(coin);
             anims.add(coinAnim);
         }
@@ -101,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
         currentWinnerAnim = coinsAnim;
     }
 
-    private ImageView findCoinByPos(ViewGroup groupToSearch, int counterPos) {
+    private ImageView findCoinByPos(int counterPos) {
         String tag = String.valueOf(counterPos);
-        return groupToSearch.findViewWithTag(tag);
+        return gridLayout.findViewWithTag(tag);
     }
 
     private Animator createWinAnim(View view) {
@@ -124,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
         gameResultText.setVisibility(View.INVISIBLE);
         playAgainButton.setVisibility(View.INVISIBLE);
 
-        GridLayout gridLayout=findViewById(R.id.gridLayout);
         for(int i=0;i<gridLayout.getChildCount();i++){
             ImageView counter=(ImageView)gridLayout.getChildAt(i);
             counter.setImageDrawable(null);
@@ -147,5 +144,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         gameResultText=findViewById(R.id.gameResultTextView);
         playAgainButton=findViewById(R.id.playAgainButton);
+        gridLayout=findViewById(R.id.gridLayout);
     }
 }
