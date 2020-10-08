@@ -1,15 +1,24 @@
 package com.soumik.connect3;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.Button;
+
 import androidx.gridlayout.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView gameResultText;
     private Button playAgainButton;
+    /** Animation, that's runs after someone has won */
+    private @Nullable AnimatorSet currentWinnerAnim;
 
     public void dropIn(View view){
 
@@ -59,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                     gameResultText.setText(winner + " has won!!");
                     gameResultText.setVisibility(View.VISIBLE);
                     playAgainButton.setVisibility(View.VISIBLE);
+                    startHighlightingWinner(winningPosition);
                 }
             }
 
@@ -73,8 +85,42 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void playAgain(View view){
+    private void startHighlightingWinner(int[] winPos) {
+        ViewGroup gridLayout = findViewById(R.id.gridLayout);
 
+        List<Animator> anims = new ArrayList<>(winPos.length);
+        for(int pos : winPos) {
+            ImageView coin = findCoinByPos(gridLayout, pos);
+            Animator coinAnim = createWinAnim(coin);
+            anims.add(coinAnim);
+        }
+
+        AnimatorSet coinsAnim = new AnimatorSet();
+        coinsAnim.playTogether(anims);
+        coinsAnim.start();
+        currentWinnerAnim = coinsAnim;
+    }
+
+    private ImageView findCoinByPos(ViewGroup groupToSearch, int counterPos) {
+        String tag = String.valueOf(counterPos);
+        return groupToSearch.findViewWithTag(tag);
+    }
+
+    private Animator createWinAnim(View view) {
+        long durationMs = 800;
+        int repeatCount = Animation.INFINITE;
+        float minAlpha = 0.2f;
+        float maxAlpha = 1f;
+
+        ObjectAnimator fadeOutAndIn = ObjectAnimator.ofFloat(view, View.ALPHA, maxAlpha, minAlpha,
+                maxAlpha);
+        fadeOutAndIn.setDuration(durationMs);
+        fadeOutAndIn.setRepeatCount(repeatCount);
+        return fadeOutAndIn;
+    }
+
+    public void playAgain(View view){
+        stopHighlightingWinner();
         gameResultText.setVisibility(View.INVISIBLE);
         playAgainButton.setVisibility(View.INVISIBLE);
 
@@ -86,6 +132,13 @@ public class MainActivity extends AppCompatActivity {
         Arrays.fill(gameState, 2);
         gameActive=true;
         activePlayer=0;
+    }
+
+    private void stopHighlightingWinner() {
+        if(currentWinnerAnim == null)
+            return;
+        currentWinnerAnim.cancel();
+        currentWinnerAnim = null;
     }
 
     @Override
